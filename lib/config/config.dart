@@ -26,6 +26,7 @@ class Config {
   // checkout
   String urlCheckoutPost = "$urlAPI/checkout-post";
   String urlCheckoutPostById = "$urlAPI/checkout-post-by-id";
+  String urlCheckoutListAll = "$urlAPI/checkout-list-all?user_id=";
   String urlCheckoutListBaru = "$urlAPI/checkout-list-baru?user_id=";
   String urlCheckoutListProses = "$urlAPI/checkout-list-proses?user_id=";
   String urlCheckoutListSelesai = "$urlAPI/checkout-list-selesai?user_id=";

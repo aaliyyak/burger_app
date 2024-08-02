@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static List<Widget> screenList = [
     LandingPage(), //0
     CartPage(), //1
-    OrderScreen(), //2
+    OrderPage(), //2
     ProfileScreen(), //3
 
     ///3

@@ -1,9 +1,12 @@
+import 'package:burger_app/models/Checkout_model.dart';
+import 'package:burger_app/services/checkout_services.dart';
 import 'package:burger_app/themes/themes.dart';
 import 'package:burger_app/widget/order_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:sp_util/sp_util.dart';
 
-class OrderScreen extends StatelessWidget {
-  const OrderScreen({super.key});
+class OrderPage extends StatelessWidget {
+  const OrderPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class OrderScreen extends StatelessWidget {
         margin: EdgeInsets.only(
           top: 40,
           left: 20,
-          right: 20,
+          right: 15,
         ),
         child: ListView(
           children: [
@@ -27,23 +30,33 @@ class OrderScreen extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
+            FutureBuilder<List<CheckoutModel>>(
+                future: CheckoutSerives()
+                    .listCheckoutAll(SpUtil.getInt('id_user').toString()),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: primaryColor,
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    return Column(
+                      children: [
+                        ...snapshot.data!.map((dataOrder) {
+                          //panggil order widgets
+                          return OrderWidget(
+                            checkoutModel: dataOrder,
+                          );
+                        })
+                      ],
+                    );
+                  }
 
-            //panggil order widgets
-            OrderWidget(
-              nama: "Beef Burger",
-              imageUrl: "assets/burger1.png",
-              harga: "20000",
-              qty: "1",
-              status: "Diproses",
-            ),
-
-            OrderWidget(
-              nama: "Regular Burger",
-              imageUrl: "assets/burger2.png",
-              harga: "15000",
-              qty: "1",
-              status: "Selesai",
-            ),
+                  return Container();
+                }),
           ],
         ),
       ),

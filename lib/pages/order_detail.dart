@@ -2,18 +2,15 @@ import 'package:burger_app/themes/themes.dart';
 import 'package:burger_app/widget/order_widget.dart';
 import 'package:burger_app/widget/status_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:burger_app/models/Checkout_model.dart';
 
-// ignore: must_be_immutable
 class OrderDetail extends StatelessWidget {
-  OrderDetail(
-      {super.key,
-      required this.nama,
-      required this.harga,
-      required this.imageUrl,
-      required this.qty,
-      required this.status});
+  const OrderDetail({
+    super.key,
+    required this.checkoutModel,
+  });
 
-  String nama, harga, imageUrl, qty, status;
+  final CheckoutModel checkoutModel;
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +41,14 @@ class OrderDetail extends StatelessWidget {
         child: ListView(
           children: [
             OrderWidget(
-                nama: nama,
-                harga: harga,
-                imageUrl: imageUrl,
-                qty: qty,
-                status: status),
+              checkoutModel: checkoutModel,
+            ),
             SizedBox(
               height: 10,
             ),
-
             // status widget
             StatusWidget(
-              status: status,
+              status: checkoutModel.status,
             ),
           ],
         ),

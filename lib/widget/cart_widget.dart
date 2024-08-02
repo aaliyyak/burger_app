@@ -1,7 +1,9 @@
 import 'package:burger_app/config/config.dart';
 import 'package:burger_app/models/Cart_model.dart';
+import 'package:burger_app/pages/shop_now_page.dart';
 import 'package:burger_app/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class CartWidget extends StatefulWidget {
@@ -95,7 +97,13 @@ class _CartWidgetState extends State<CartWidget> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0)),
                     ),
-                    onPressed: null,
+                    onPressed: () {
+                      Get.to(ShopNowPage(
+                          jumlahBeli: widget.dataCart.jumlah,
+                          dataOrder: widget.dataCart,
+                          idCart: int.parse(widget.dataCart.id),
+                          totalharga: int.parse(widget.dataCart.totalharga)));
+                    },
                     child: Text(
                       "Pesan",
                       style: blackTextstyle.copyWith(

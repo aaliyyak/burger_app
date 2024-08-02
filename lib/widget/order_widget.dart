@@ -1,35 +1,18 @@
-import 'package:burger_app/config/config.dart';
-import 'package:burger_app/pages/order_detail.dart';
+import 'package:burger_app/models/Checkout_model.dart';
 import 'package:burger_app/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class OrderWidget extends StatelessWidget {
-  OrderWidget(
-      {super.key,
-      required this.nama,
-      required this.harga,
-      required this.imageUrl,
-      required this.qty,
-      required this.status});
+import '../config/config.dart';
 
-  String nama, harga, imageUrl, qty, status;
+class OrderWidget extends StatelessWidget {
+  OrderWidget({super.key, required this.checkoutModel});
+
+  final CheckoutModel checkoutModel;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => OrderDetail(
-                      nama: nama,
-                      harga: harga,
-                      imageUrl: imageUrl,
-                      qty: qty,
-                      status: status,
-                    )));
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
         width: double.infinity,
@@ -40,8 +23,8 @@ class OrderWidget extends StatelessWidget {
         child: Row(
           children: [
             // image
-            Image.asset(
-              imageUrl,
+            Image.network(
+              checkoutModel.item.gambar,
               width: 105,
               height: 105,
             ),
@@ -52,29 +35,41 @@ class OrderWidget extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  nama,
-                  style: blackTextstyle.copyWith(
-                    fontWeight: FontWeight.w600,
+                Text('Kode : ' + checkoutModel.kodeTransaksi),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.55,
+                  child: Text(
+                    checkoutModel.item.namaProduct,
+                    style: blackTextstyle.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 Text(
-                  Config.convertToIdr(int.parse(harga), 0),
+                  Config.convertToIdr(int.parse(checkoutModel.grandTotal), 0),
                   style: greyTextstyle,
                 ),
                 Text(
-                  "Qty : ${qty}",
+                  "Qty : ${checkoutModel.item.jumlah}",
                   style: greyTextstyle,
                 ),
                 Text(
-                  status,
-                  style: status == "Diproses"
+                  checkoutModel.status == "0"
+                      ? 'Baru'
+                      : checkoutModel.status == "1"
+                          ? "Diproses"
+                          : "Selesai",
+                  style: checkoutModel.status == "0"
                       ? primaryTextstyle.copyWith(
                           fontWeight: FontWeight.w600,
                         )
-                      : greenTextstyle.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+                      : checkoutModel.status == "1"
+                          ? greyTextstyle.copyWith(
+                              fontWeight: FontWeight.w600,
+                            )
+                          : greenTextstyle.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
                 ),
               ],
             ),
