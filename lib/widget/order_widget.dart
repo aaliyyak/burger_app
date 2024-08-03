@@ -1,6 +1,8 @@
 import 'package:burger_app/models/Checkout_model.dart';
+import 'package:burger_app/pages/order_detail.dart';
 import 'package:burger_app/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../config/config.dart';
 
@@ -12,7 +14,9 @@ class OrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Get.to(OrderDetail(dataOrder: checkoutModel));
+      },
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
         width: double.infinity,

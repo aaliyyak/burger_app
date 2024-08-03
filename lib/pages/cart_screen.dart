@@ -1,3 +1,4 @@
+//import 'package:burger_app/config/config.dart';
 import 'package:burger_app/models/Cart_model.dart';
 import 'package:burger_app/services/cart_services.dart';
 import 'package:burger_app/themes/themes.dart';
@@ -14,7 +15,7 @@ class CartPage extends StatelessWidget {
       body: Container(
         margin: EdgeInsets.only(
           left: 20,
-          right: 20,
+          right: 15,
           top: 39,
         ),
         child: ListView(
@@ -26,15 +27,12 @@ class CartPage extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
             FutureBuilder<List<CartModel>>(
               future: CartServices.getCartList(),
               builder: (context, snapshot) {
-                //saat loading..
+                // saat loading...
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  //tampilkan widget circularProgressindikator
+                  // tampilkan widget CircularProgressIndicator
                   return Container(
                     child: Center(
                       child: CircularProgressIndicator(
@@ -54,7 +52,7 @@ class CartPage extends StatelessWidget {
                   );
                 }
 
-                //default agar future builder bisa berfungasi
+                // defautl agar future builder bisa berfungsi
                 return Container();
               },
             ),
