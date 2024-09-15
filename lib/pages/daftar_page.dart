@@ -135,26 +135,33 @@ class DaftarPage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: authC.password,
-              obscureText: true,
-              decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  onPressed: null,
-                  icon: Icon(Icons.visibility),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(color: borderColor),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(color: borderColor),
-                ),
-                hintText: "Masukkan Password",
-                hintStyle: greyTextstyle,
-              ),
-            ),
+            Obx(() => TextFormField(
+                  controller: authC.password,
+                  obscureText: !authC.isPasswordVisible.value,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        authC.isPasswordVisible.value =
+                            !authC.isPasswordVisible.value;
+                      },
+                      icon: Icon(
+                        authC.isPasswordVisible.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    hintText: "Masukkan Password",
+                    hintStyle: greyTextstyle,
+                  ),
+                )),
 
             SizedBox(
               height: 60,
@@ -170,12 +177,14 @@ class DaftarPage extends StatelessWidget {
                     onPressed: () {
                       authC.register();
                     },
-                    child: authC.isLoading == true ? CircularProgressIndicator(
-                      color: whiteColor,
-                    )  :  Text(
-                      "Buat Akun",
-                      style: blackTextstyle,
-                    ),
+                    child: authC.isLoading.value
+                        ? CircularProgressIndicator(
+                            color: whiteColor,
+                          )
+                        : Text(
+                            "Buat Akun",
+                            style: blackTextstyle,
+                          ),
                   ),
                 )),
 
